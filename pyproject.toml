@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "demo-test"
+version = "0.1.0"
+description = ""
+authors = ["Leihtman"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pytest = "^8.2.2"
+pydantic-settings = "^2.3.3"
+page-objects = "^1.1.0"
+pytest-selenium = "^4.1.0"
+allure-pytest = "^2.13.5"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
