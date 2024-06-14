@@ -14,6 +14,10 @@ class BasePage(PageObject):
     def open_page(self):
         return self.browser.get(self.url)
 
-    def get_element_by_text(self, text: str):
+    def find_element_by_text(self, text: str):
         selector_type, value = PageElement(xpath=f"//*[contains(text(), '{text}')]").locator
+        return self.browser.find_element(selector_type, value)
+
+    def find_element_by_xpath(self, xpath_value: str):
+        selector_type, value = PageElement(xpath=xpath_value).locator
         return self.browser.find_element(selector_type, value)
