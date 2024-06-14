@@ -24,5 +24,8 @@ def test_success_registration(browser):
     registration_page.add_subject("Maths")
     registration_page.select_hobby_checkbox(HobbiesEnum.READING.value)
     registration_page.upload_image("img.png")
+    registration_page.current_address_text_area.send_keys("Kazan, st. Baumana")
+    registration_page.select_state("Haryana")
+    registration_page.select_city("Panipat")
     print("result")
     pass

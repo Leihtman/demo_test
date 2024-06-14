@@ -23,6 +23,9 @@ class RegistrationPage(BasePage):
     subjects_element = PageElement(css=".subjects-auto-complete__value-container")
     subjects_field = PageElement(id_="subjectsInput")
     file_upload_button = PageElement(id_="uploadPicture")
+    current_address_text_area = PageElement(id_="currentAddress")
+    state_selector = PageElement(xpath="//div[text()='Select State']")
+    city_selector = PageElement(id_="city")
 
     def __init__(self, browser):
         super().__init__(browser)
@@ -70,3 +73,11 @@ class RegistrationPage(BasePage):
         data_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data'))
         file_path = os.path.join(data_dir, image_name)
         self.file_upload_button.send_keys(file_path)
+
+    def select_state(self, state_name: str):
+        self.state_selector.click()
+        self.get_element_by_text(state_name).click()
+
+    def select_city(self, city_name: str):
+        self.city_selector.click()
+        self.get_element_by_text(city_name).click()
