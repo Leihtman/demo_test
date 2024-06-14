@@ -11,6 +11,7 @@ pytest = "^8.2.2"
 pydantic-settings = "^2.3.3"
 page-objects = "^1.1.0"
 pytest-selenium = "^4.1.0"
+allure-pytest = "^2.13.5"
 
 [build-system]
 requires = ["poetry-core"]
