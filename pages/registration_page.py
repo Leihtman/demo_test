@@ -1,4 +1,8 @@
+import os
+
 from page_objects import PageElement
+from selenium.webdriver import Keys, ActionChains
+
 from config.settings import get_settings
 from pages.base_page import BasePage
 
@@ -6,19 +10,19 @@ settings = get_settings()
 
 
 class RegistrationPage(BasePage):
-    first_name = PageElement(id_="firstName")
-    last_name = PageElement(id_="lastName")
-    user_email = PageElement(id_="userEmail")
+    first_name_field = PageElement(id_="firstName")
+    last_name_field = PageElement(id_="lastName")
+    user_email_field = PageElement(id_="userEmail")
     male_radio_button = PageElement(xpath="//input[@name='gender'][@type='radio'][@value='Male']")
     female_radio_button = PageElement(xpath="//input[@name='gender'][@type='radio'][@value='Female']")
     other_radio_button = PageElement(xpath="//input[@name='gender'][@type='radio'][@value='Other']")
-    user_number = PageElement(id_="userNumber")
+    user_number_field = PageElement(id_="userNumber")
     date_of_birth_field = PageElement(id_="dateOfBirthInput")
     month_of_birth_field = PageElement(xpath="//*[@id='dateOfBirth']//select[@class='react-datepicker__month-select']")
     year_of_birth_field = PageElement(xpath="//*[@id='dateOfBirth']//select[@class='react-datepicker__year-select']")
-    day_of_birth = PageElement(xpath="//input[@name='gender'][@type='radio'][@value='Other']")
-
-    login = PageElement(css='input[type="submit"]')
+    subjects_element = PageElement(css=".subjects-auto-complete__value-container")
+    subjects_field = PageElement(id_="subjectsInput")
+    file_upload_button = PageElement(id_="uploadPicture")
 
     def __init__(self, browser):
         super().__init__(browser)
@@ -38,6 +42,10 @@ class RegistrationPage(BasePage):
         ).locator
         return self.browser.find_element(selector_type, value)
 
+    def get_hobby_element(self, hobby_number: int):
+        selector_type, value = PageElement(xpath=f"//input[@type='checkbox'][@value='{hobby_number}']").locator
+        return self.browser.find_element(selector_type, value)
+
     def select_month_of_birth(self, month_number: int):
         self.month_of_birth_field.click()
         self.get_month_of_birth_element(month_number).click()
@@ -48,3 +56,17 @@ class RegistrationPage(BasePage):
 
     def select_day_of_birth(self, day_number: int, month_str: str):
         self.get_day_of_birth_element(day_number, month_str).click()
+
+    def add_subject(self, value: str):
+        self.subjects_element.click()
+        self.subjects_field.send_keys(value)
+        self.subjects_field.send_keys(Keys.ENTER)
+
+    def select_hobby_checkbox(self, hobby_number: int):
+        element = self.get_hobby_element(hobby_number)
+        ActionChains(self.browser).move_to_element(element).click().perform()
+
+    def upload_image(self, image_name: str):
+        data_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data'))
+        file_path = os.path.join(data_dir, image_name)
+        self.file_upload_button.send_keys(file_path)
