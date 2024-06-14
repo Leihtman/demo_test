@@ -11,8 +11,8 @@ def pytest_addoption(parser):
 
 
 def pytest_configure(config):
-    env_file_path = config.getoption("--env_file")
-    os.environ["env_file_name"] = env_file_path
+    env_file_name = config.getoption("--env_file")
+    os.environ["env_file_name"] = env_file_name
 
 
 @pytest.fixture
