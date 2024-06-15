@@ -20,13 +20,11 @@ class RegistrationPage(BasePage):
     file_upload_button = PageElement(id_="uploadPicture")
     current_address_text_area = PageElement(id_="currentAddress")
     city_selector = PageElement(id_="city")
-    male_radio_button = PageElement(xpath="//input[@name='gender'][@type='radio'][@value='Male']")
-    female_radio_button = PageElement(xpath="//input[@name='gender'][@type='radio'][@value='Female']")
-    other_radio_button = PageElement(xpath="//input[@name='gender'][@type='radio'][@value='Other']")
     month_of_birth_field = PageElement(xpath="//*[@id='dateOfBirth']//select[@class='react-datepicker__month-select']")
     year_of_birth_field = PageElement(xpath="//*[@id='dateOfBirth']//select[@class='react-datepicker__year-select']")
     state_selector = PageElement(xpath="//div[text()='Select State']")
     subjects_element = PageElement(css=".subjects-auto-complete__value-container")
+    gender_radio_button_xpath_str = "//input[@name='gender'][@type='radio'][@value='{gender}']"
     month_of_birth_xpath_str = "//*[@id='dateOfBirth']//option[@value='{month}']"
     year_of_birth_xpath_str = "//*[@id='dateOfBirth']//option[@value='{year}']"
     day_of_birth_xpath_str = "//div[@id='dateOfBirth']//div[text()='{day}' and contains(@aria-label, '{month}')]"
@@ -35,6 +33,12 @@ class RegistrationPage(BasePage):
     def __init__(self, browser):
         super().__init__(browser)
         self.url = settings.base_url + "/automation-practice-form"
+
+    @allure.step("RP: Select student gender")
+    def select_gender(self, gender_value: str):
+        ready_xpath_str = self.gender_radio_button_xpath_str.format(gender=gender_value)
+        detected_element = self.find_element_by_xpath(ready_xpath_str)
+        detected_element.send_keys(Keys.SPACE)
 
     @allure.step("RP: Select month of birthday")
     def select_month_of_birth(self, month_value: int):
@@ -57,16 +61,18 @@ class RegistrationPage(BasePage):
         detected_element.click()
 
     @allure.step("RP: Add subject")
-    def add_subject(self, value: str):
-        self.subjects_element.click()
-        self.subjects_field.send_keys(value)
-        self.subjects_field.send_keys(Keys.ENTER)
+    def add_subjects(self, subjects: list[str]):
+        for subject in subjects:
+            self.subjects_element.click()
+            self.subjects_field.send_keys(subject)
+            self.subjects_field.send_keys(Keys.ENTER)
 
     @allure.step("RP: Select hobby checkbox")
-    def select_hobby_checkbox(self, hobby_value: int):
-        ready_xpath_str = self.hobby_checkbox_xpath_str.format(hobby_number=hobby_value)
-        detected_element = self.find_element_by_xpath(ready_xpath_str)
-        ActionChains(self.browser).move_to_element(detected_element).click().perform()
+    def select_hobbies_checkbox(self, hobbies: list[str]):
+        for hobby in hobbies:
+            ready_xpath_str = self.hobby_checkbox_xpath_str.format(hobby_number=hobby)
+            detected_element = self.find_element_by_xpath(ready_xpath_str)
+            ActionChains(self.browser).move_to_element(detected_element).click().perform()
 
     @allure.step("RP: Upload image")
     def upload_image(self, image_name: str):
