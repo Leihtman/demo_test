@@ -11,14 +11,14 @@ class StudentGenerator:
             last_name="Drop",
             email="test@gmail.com",
             gender="Female",
-            mobile=89993334444,
+            mobile=9993334444,
             date_of_birth=DateOfBirth(
                 day=6,
                 month=MonthEnum.SEPTEMBER,
                 year=1994
             ),
             subjects=["English", "Maths"],
-            hobbies=[HobbiesEnum.READING.value],
+            hobbies=[HobbiesEnum.READING, HobbiesEnum.MUSIC],
             picture_file_name="img.png",
             current_address="Kazan, st. Baumana",
             state="Haryana",

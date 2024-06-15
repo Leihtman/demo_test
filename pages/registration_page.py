@@ -7,6 +7,7 @@ from selenium.webdriver import Keys, ActionChains
 from config.settings import get_settings
 from pages.base_page import BasePage
 from ui_dataclasses.student_dataclass import DateOfBirth
+from ui_enums.hobbies_enum import HobbiesEnum
 
 settings = get_settings()
 
@@ -76,9 +77,9 @@ class RegistrationPage(BasePage):
             self.send_keys(self.subjects_field, Keys.ENTER)
 
     @allure.step("RP: Select hobby checkbox")
-    def select_hobbies_checkbox(self, hobbies: list[str]):
+    def select_hobbies_checkbox(self, hobbies: list[HobbiesEnum]):
         for hobby in hobbies:
-            ready_xpath_str = self.hobby_checkbox_xpath_str.format(hobby_number=hobby)
+            ready_xpath_str = self.hobby_checkbox_xpath_str.format(hobby_number=hobby.value.number)
             detected_element = self.find_element_by_xpath(ready_xpath_str)
             ActionChains(self.browser).move_to_element(detected_element).click().perform()
 

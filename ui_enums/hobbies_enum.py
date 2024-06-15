@@ -1,7 +1,9 @@
 from enum import Enum
 
+from ui_dataclasses.hobby_dataclass import Hobby
+
 
 class HobbiesEnum(Enum):
-    SPORTS = 1
-    READING = 2
-    MUSIC = 3
+    SPORTS = Hobby(number=1, name="Sports")
+    READING = Hobby(number=2, name="Reading")
+    MUSIC = Hobby(number=3, name="Music")
