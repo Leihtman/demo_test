@@ -45,27 +45,27 @@ class RegistrationPage(BasePage):
         self.month_of_birth_field.click()
         ready_xpath_str = self.month_of_birth_xpath_str.format(month=month_value)
         detected_element = self.find_element_by_xpath(ready_xpath_str)
-        detected_element.click()
+        self.click(detected_element)
 
     @allure.step("RP: Select year of birthday")
     def select_year_of_birth(self, year_value: int):
         self.year_of_birth_field.click()
         ready_xpath_str = self.year_of_birth_xpath_str.format(year=year_value)
         detected_element = self.find_element_by_xpath(ready_xpath_str)
-        detected_element.click()
+        self.click(detected_element)
 
     @allure.step("RP: Select day of birthday")
     def select_day_of_birth(self, day_value: int, month_value: str):
         ready_xpath_str = self.day_of_birth_xpath_str.format(day=day_value, month=month_value)
         detected_element = self.find_element_by_xpath(ready_xpath_str)
-        detected_element.click()
+        self.click(detected_element)
 
     @allure.step("RP: Add subject")
     def add_subjects(self, subjects: list[str]):
         for subject in subjects:
             self.subjects_element.click()
-            self.subjects_field.send_keys(subject)
-            self.subjects_field.send_keys(Keys.ENTER)
+            self.send_keys(self.subjects_field, subject)
+            self.send_keys(self.subjects_field, Keys.ENTER)
 
     @allure.step("RP: Select hobby checkbox")
     def select_hobbies_checkbox(self, hobbies: list[str]):
@@ -78,14 +78,16 @@ class RegistrationPage(BasePage):
     def upload_image(self, image_name: str):
         data_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data'))
         file_path = os.path.join(data_dir, image_name)
-        self.file_upload_button.send_keys(file_path)
+        self.send_keys(self.file_upload_button, file_path)
 
     @allure.step("RP: Select state")
     def select_state(self, state_name: str):
         self.state_selector.click()
-        self.find_element_by_text(state_name).click()
+        detected_element = self.find_element_by_text(state_name)
+        self.click(detected_element)
 
     @allure.step("RP: Select city")
     def select_city(self, city_name: str):
         self.city_selector.click()
-        self.find_element_by_text(city_name).click()
+        detected_element = self.find_element_by_text(city_name)
+        self.click(detected_element)

@@ -1,3 +1,4 @@
+import allure
 from page_objects import PageObject, PageElement
 from config.settings import get_settings
 
@@ -14,6 +15,22 @@ class BasePage(PageObject):
 
     def open_page(self):
         self.browser.get(self.url)
+
+    @staticmethod
+    def assert_element_found(element):
+        assert element is not None, "Element is not found on the page"
+
+    def send_keys(self, element, value):
+        self.assert_element_found(element)
+        assert element.is_enabled()
+        assert element.is_displayed()
+        element.send_keys(value)
+
+    def click(self, element):
+        self.assert_element_found(element)
+        assert element.is_enabled()
+        assert element.is_displayed()
+        element.click()
 
     def find_element_by_text(self, text: str):
         selector_type, value = PageElement(xpath=f"//*[contains(text(), '{text}')]").locator
