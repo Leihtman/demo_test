@@ -5,7 +5,7 @@ from ui_enums.month_enum import MonthEnum
 
 class StudentGenerator:
     @staticmethod
-    def get_success_full_student():
+    def get_full_success_student():
         return Student(
             first_name="Leihtman",
             last_name="Drop",

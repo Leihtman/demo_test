@@ -5,7 +5,7 @@ from ui_generators.student_generator import StudentGenerator
 
 def test_success_registration(browser):
     # Arrange
-    test_student = StudentGenerator.get_success_full_student()
+    test_student = StudentGenerator.get_full_success_student()
     registration_page = RegistrationPage(browser)
     registration_page.open_page()
     registration_page.send_keys(element=registration_page.first_name_field, value=test_student.first_name)
