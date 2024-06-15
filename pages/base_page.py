@@ -13,7 +13,7 @@ class BasePage(PageObject):
         self.url = settings.base_url
 
     def open_page(self):
-        return self.browser.get(self.url)
+        self.browser.get(self.url)
 
     def find_element_by_text(self, text: str):
         selector_type, value = PageElement(xpath=f"//*[contains(text(), '{text}')]").locator
