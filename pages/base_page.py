@@ -5,6 +5,7 @@ settings = get_settings()
 
 
 class BasePage(PageObject):
+    submit_button = PageElement(id_="submit")
 
     def __init__(self, browser):
         super().__init__(browser)
