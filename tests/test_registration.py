@@ -24,9 +24,7 @@ def test_success_registration(browser):
     registration_page.click(element=registration_page.submit_button)
     # Assert
     submit_modal = RegistrationSubmitModal(browser)
-    submit_modal.get_text_and_assert_by_xpath(
-        xpath_value=submit_modal.header_title_xpath_str,
-        expected_value="Thanks for submitting the form"
-    )
+    submit_modal.assert_element_displayed(*submit_modal.modal_data)
+    submit_modal.check_and_assert_title_displayed()
     expected_data_map = submit_modal.prepare_expected_data_map(student=test_student)
     submit_modal.check_and_assert_table_fields(expected_data_map)

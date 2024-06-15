@@ -3,6 +3,7 @@ from ui_dataclasses.student_dataclass import Student
 
 
 class RegistrationSubmitModal(BasePage):
+    modal_data = ("xpath", "//div[@class='modal-content']")
     header_title_xpath_str = "//div[@class='modal-title h4']"
     table_field_pattern = "//tr/td[text()='{field_name}']/following-sibling::td"
 
@@ -26,3 +27,9 @@ class RegistrationSubmitModal(BasePage):
         for field_name, expected_value in table_data_expected.items():
             field_xpath_str = self.table_field_pattern.format(field_name=field_name)
             self.get_text_and_assert_by_xpath(field_xpath_str, expected_value)
+
+    def check_and_assert_title_displayed(self, expected_title: str = "Thanks for submitting the form"):
+        self.get_text_and_assert_by_xpath(
+            xpath_value=self.header_title_xpath_str,
+            expected_value=expected_title
+        )
