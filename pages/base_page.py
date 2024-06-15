@@ -1,4 +1,3 @@
-import allure
 from page_objects import PageObject, PageElement
 from config.settings import get_settings
 

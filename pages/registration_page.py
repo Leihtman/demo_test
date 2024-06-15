@@ -6,6 +6,7 @@ from selenium.webdriver import Keys, ActionChains
 
 from config.settings import get_settings
 from pages.base_page import BasePage
+from ui_dataclasses.student_dataclass import DateOfBirth
 
 settings = get_settings()
 
@@ -40,25 +41,32 @@ class RegistrationPage(BasePage):
         detected_element = self.find_element_by_xpath(ready_xpath_str)
         detected_element.send_keys(Keys.SPACE)
 
-    @allure.step("RP: Select month of birthday")
+    @allure.step("RP: Select month of birth")
     def select_month_of_birth(self, month_value: int):
         self.month_of_birth_field.click()
         ready_xpath_str = self.month_of_birth_xpath_str.format(month=month_value)
         detected_element = self.find_element_by_xpath(ready_xpath_str)
         self.click(detected_element)
 
-    @allure.step("RP: Select year of birthday")
+    @allure.step("RP: Select year of birth")
     def select_year_of_birth(self, year_value: int):
         self.year_of_birth_field.click()
         ready_xpath_str = self.year_of_birth_xpath_str.format(year=year_value)
         detected_element = self.find_element_by_xpath(ready_xpath_str)
         self.click(detected_element)
 
-    @allure.step("RP: Select day of birthday")
+    @allure.step("RP: Select day of birth")
     def select_day_of_birth(self, day_value: int, month_value: str):
         ready_xpath_str = self.day_of_birth_xpath_str.format(day=day_value, month=month_value)
         detected_element = self.find_element_by_xpath(ready_xpath_str)
         self.click(detected_element)
+
+    @allure.step("RP: Set date of birth")
+    def set_date_of_birth(self, date_of_birth: DateOfBirth):
+        self.click(element=self.date_of_birth_field)
+        self.select_month_of_birth(date_of_birth.month.value.number)
+        self.select_year_of_birth(date_of_birth.year)
+        self.select_day_of_birth(date_of_birth.day, date_of_birth.month.value.name)
 
     @allure.step("RP: Add subject")
     def add_subjects(self, subjects: list[str]):
